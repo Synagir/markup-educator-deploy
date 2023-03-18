@@ -1,0 +1,27 @@
+{
+    "extends": [
+      "eslint:recommended",
+      "plugin:react/recommended",
+      "plugin:@typescript-eslint/recommended",
+      "next/core-web-vitals",
+      "airbnb",
+      "airbnb/hooks",
+      "airbnb-typescript",
+      "prettier"
+    ],
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+      "project": ["tsconfig.json"]
+    },
+    "rules": {
+      "react/react-in-jsx-scope": "off",
+      "react/jsx-props-no-spreading": "off",
+      // 화살표 함수를 사용하기 위한 rule
+      "react/function-component-definition": [
+        2,
+        { "namedComponents": ["arrow-function"] }
+      ],
+      // EOL 설정 rule
+      "eol-last": ["error", "always"]
+    }
+  }
