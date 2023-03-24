@@ -1,10 +1,12 @@
-import React from 'react';
-import styles from './index.module.scss'
+import styles from './index.module.scss';
 
-const Index = () => {
+export default function Index() {
   return (
-    <div className={styles.dd}>dd</div>
-  )
+    <div className={styles.dd}>
+      ddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddㅇ
+    </div>
+  );
 }
 
-export default Index;
+
+
