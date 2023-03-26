@@ -2,7 +2,7 @@
   "name": "markup-educator",
   "version": "1.0.0",
   "description": "",
-  "main": "index.tsx",
+  "main": "pages/index.tsx",
   "scripts": {
     "dev": "next",
     "build": "next build",

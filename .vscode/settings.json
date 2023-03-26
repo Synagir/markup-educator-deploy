@@ -5,6 +5,5 @@
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": true
   },
-  "eslint.format.enable": true,
-  "eslint.workingDirectories": ["src"]
+  "eslint.format.enable": true
 }
