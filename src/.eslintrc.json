@@ -4,10 +4,13 @@
     "project": ["src/tsconfig.json"],
     "createDefaultProgram": true
   },
-  "plugins": ["@typescript-eslint","import",
+  "plugins": [
+    "@typescript-eslint",
+    "import",
     "react",
     "jsx-a11y",
-    "react-hooks"],
+    "react-hooks"
+  ],
   "env": {
     "browser": true,
     "node": true
