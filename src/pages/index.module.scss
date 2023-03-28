@@ -1,3 +1,6 @@
 .dd {
+  max-width: 200px;
   color: red;
+
+  @include ellipsis;
 }
