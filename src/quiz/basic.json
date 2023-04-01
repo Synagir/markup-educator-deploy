@@ -1,0 +1,7 @@
+{
+  "name": "basic",
+  "userHTML": "<h1>Hi</h1>",
+  "userCSS": "h1 { font-size: 2em; }",
+  "answerHTML": "<h1>Hi</h1>",
+  "answerCSS": "h1 { font-size: 2.5em; }"
+}
