@@ -35,7 +35,7 @@ export default function Canvas({
 
   useEffect(() => {
     forwardRef.current = canvasRef.current;
-  }, [forwardRef]);
+  }, []);
 
   return <div className={styles.canvas} ref={canvasRef} />;
 }
