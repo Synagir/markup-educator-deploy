@@ -1,15 +1,7 @@
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, forwardRef, useImperativeHandle } from 'react';
 import styles from './Canvas.module.scss';
 
-export default function Canvas({
-  html,
-  css,
-  forwardRef,
-}: {
-  html: string;
-  css: string;
-  forwardRef: any;
-}) {
+function Canvas({ html, css }: { html: string; css: string }, ref) {
   const canvasRef = useRef();
 
   useEffect(() => {
@@ -33,9 +25,17 @@ export default function Canvas({
     shadowRoot.appendChild(htmlElement);
   }, [html, css]);
 
-  useEffect(() => {
-    forwardRef.current = canvasRef.current;
-  }, []);
+  useImperativeHandle(
+    ref,
+    () => ({
+      getCanvas() {
+        return canvasRef.current;
+      },
+    }),
+    []
+  );
 
   return <div className={styles.canvas} ref={canvasRef} />;
 }
+
+export default forwardRef(Canvas);

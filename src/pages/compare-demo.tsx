@@ -4,27 +4,19 @@ import quiz from '@quiz/basic.json';
 import compare from '@lib/score/compare';
 
 export default function Compare() {
-  const userCanvasRef = useRef();
-  const answerCanvasRef = useRef();
+  const userCanvasRef = useRef(null);
+  const answerCanvasRef = useRef(null);
   const [score, setScore] = useState(0);
 
   async function handleCompare() {
-    setScore(await compare(userCanvasRef.current, answerCanvasRef.current));
+    setScore(await compare(userCanvasRef.current.getCanvas(), answerCanvasRef.current.getCanvas()));
   }
 
   return (
     <div className="container">
       <h1>정답 비교</h1>
-      <Canvas
-        html={quiz.userHTML}
-        css={quiz.userCSS}
-        forwardRef={userCanvasRef}
-      />
-      <Canvas
-        html={quiz.answerHTML}
-        css={quiz.answerCSS}
-        forwardRef={answerCanvasRef}
-      />
+      <Canvas html={quiz.userHTML} css={quiz.userCSS} ref={userCanvasRef} />
+      <Canvas html={quiz.answerHTML} css={quiz.answerCSS} ref={answerCanvasRef} />
       <button type="button" onClick={handleCompare}>
         compare
       </button>
