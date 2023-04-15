@@ -38,7 +38,11 @@ function Header() {
         </button>
         {menuArea &&
           <div className={styles.dimmed} onClick={() => openMenu()}>
-            <div className={styles.menu_area}>dd</div>
+            <div className={styles.menu_area}>
+              <button type="button">
+                <span className="blind">닫기</span>
+              </button>
+            </div>
           </div>
         }
         {toastPopup &&

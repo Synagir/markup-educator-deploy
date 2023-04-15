@@ -1,5 +1,5 @@
+import '@picocss/pico';
 import '@styles/globals.scss';
-import '@picocss/pico/scss/pico.scss'
 import type { AppProps } from 'next/app';
 
 export default function App({ Component, pageProps }: AppProps) {
