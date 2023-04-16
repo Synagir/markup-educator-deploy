@@ -2,25 +2,22 @@ import { useState } from "react";
 import styles from "./header.module.scss";
 
 function Header() {
-  const [menuArea, setMenuArea] = useState(false)
-  const [toastPopup, setToastPopup] = useState(false)
-  const openMenu = () => {
-    setMenuArea(!menuArea)
-    if (menuArea)
+  const [quizList, setQuizList] = useState(false)
+  const [copySuccess, setCopySuccess] = useState(false)
+  const openQuizList = () => {
+    setQuizList(!quizList)
+    if (quizList)
       document.body.style.overflow = 'hidden'
     else
       document.body.style.overflow = 'auto'
   }
 
-  const copyUrl = () => {
+  function copyUrl() {
     navigator.clipboard.writeText(window.location.href)
-    setToastPopup(true)
+    setCopySuccess(true)
     const timer = setTimeout(() => {
-      setToastPopup(false);
+      setCopySuccess(false);
     }, 1500);
-    return () => {
-      clearTimeout(timer);
-    };
   }
   return (
     <header className={styles.container}>
@@ -33,11 +30,11 @@ function Header() {
         <button type="button" className={styles.button} onClick={copyUrl}>
           <span className="blind">공유</span>
         </button>
-        <button type="button" onClick={() => openMenu()} className={styles.button}>
+        <button type="button" onClick={openQuizList} className={styles.button}>
           dd
         </button>
-        {menuArea &&
-          <div className={styles.dimmed} onClick={() => openMenu()}>
+        {quizList &&
+          <div className={styles.dimmed} onClick={openQuizList}>
             <div className={styles.menu_area}>
               <button type="button">
                 <span className="blind">닫기</span>
@@ -45,7 +42,7 @@ function Header() {
             </div>
           </div>
         }
-        {toastPopup &&
+        {copySuccess &&
           <p className={styles.share_text}>복사 되었습니다</p>
         }
       </div>
