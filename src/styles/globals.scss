@@ -42,10 +42,6 @@ a {
   text-decoration: none;
 }
 
-// a:hover {
-//   text-decoration: underline;
-// }
-
 img {
   vertical-align: top;
 }
@@ -57,6 +53,11 @@ fieldset {
 html,
 body {
   height: 100%;
+}
+
+button {
+  display: inline-block;
+  margin: 0;
 }
 
 .blind {
