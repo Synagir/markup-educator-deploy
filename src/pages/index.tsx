@@ -59,26 +59,18 @@ export default function Index() {
             css
           </button>
         </div>
-        <div className={styles.code}>
-          {activeHtmlStateTab ? (
-            <CodeMirror
-              value={htmlDefaultState}
-              theme={okaidia}
-              width="380px"
-              height="380px"
-              extensions={[html({ autoCloseTags: true })]}
-              onChange={handleHtmlState}
-            />
-          ) : (
-            <CodeMirror
-              value={cssDefaultState}
-              theme={okaidia}
-              width="380px"
-              height="380px"
-              extensions={[css()]}
-              onChange={handleCssState}
-            />
-          )}
+        <div className={classnames(styles.code, { [styles.activate]: activeHtmlStateTab })}>
+          <CodeMirror
+            value={htmlDefaultState}
+            theme={okaidia}
+            width="380px"
+            height="380px"
+            extensions={[html({ autoCloseTags: true })]}
+            onChange={handleHtmlState}
+          />
+        </div>
+        <div className={classnames(styles.code, { [styles.activate]: !activeHtmlStateTab })}>
+          <CodeMirror value={cssDefaultState} theme={okaidia} width="380px" height="380px" extensions={[css()]} onChange={handleCssState} />
         </div>
         <div className={styles.tab}>
           <button
@@ -100,20 +92,14 @@ export default function Index() {
             answer
           </button>
         </div>
-        <div className={styles.code}>
-          <div className={styles.view}>
-            {activeUserViewTab ? (
-              /* html + css 코드 결과 영역입니다. 
-                이곳에 Shadow Dom 사용허여 구현하시면 됩니다.
-              */
-              // eslint-disable-next-line react/jsx-no-useless-fragment
-              <></>
-            ) : (
-              /* 정답 공간 뷰 영역입니다 */
-              // eslint-disable-next-line react/jsx-no-useless-fragment
-              <></>
-            )}
+        <div className={styles.result}>
+          <div className={classnames(styles.code, { [styles.activate]: activeUserViewTab })}>
+            {/*
+              html + css 코드 결과 영역입니다. 
+              이곳에 Shadow Dom 사용허여 구현하시면 됩니다.
+            */}
           </div>
+          <div className={classnames(styles.code, { [styles.activate]: !activeUserViewTab })}>{/* 정답 공간 뷰 영역입니다 */}</div>
         </div>
         <div className={styles.box}>
           <Link href="./" className={classnames(styles.link_start, 'contrast')}>
