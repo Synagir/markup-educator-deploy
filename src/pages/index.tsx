@@ -6,6 +6,7 @@ import { okaidia } from '@uiw/codemirror-theme-okaidia';
 import { html } from '@codemirror/lang-html';
 import { css } from '@codemirror/lang-css';
 import { historyField } from '@codemirror/commands';
+import Canvas from '@component/Canvas';
 import styles from './index.module.scss';
 
 const htmlDefaultState = `<div class="text">\n\tHello World\n</div>`;
@@ -94,12 +95,11 @@ export default function Index() {
         </div>
         <div className={styles.result}>
           <div className={classnames(styles.code, { [styles.activate]: activeUserViewTab })}>
-            {/*
-              html + css 코드 결과 영역입니다. 
-              이곳에 Shadow Dom 사용허여 구현하시면 됩니다.
-            */}
+            <Canvas html={htmlState} css={cssState} />
           </div>
-          <div className={classnames(styles.code, { [styles.activate]: !activeUserViewTab })}>{/* 정답 공간 뷰 영역입니다 */}</div>
+          <div className={classnames(styles.code, { [styles.activate]: !activeUserViewTab })}>
+            <Canvas html="" css="" />
+          </div>
         </div>
         <div className={styles.box}>
           <Link href="./" className={classnames(styles.link_start, 'contrast')}>
