@@ -4,7 +4,7 @@ import styles from "./header.module.scss";
 
 function Header() {
   const [isQuizListOpened, setIsQuizListOpened] = useState(false)
-  const [showCopySuccessToast, setShowCopySuccessToast] = useState<boolean>(false)
+  const [showCopySuccessPopup, setShowCopySuccessPopup] = useState<boolean>(false)
   const [fadeToast, setFadeToast] = useState<'fade_out' | 'fade_in'>('fade_in')
   function toggleQuizListOpened() {
     setIsQuizListOpened(!isQuizListOpened)
@@ -15,13 +15,13 @@ function Header() {
   }
 
   function copyUrlButtonHandler() {
-    setShowCopySuccessToast(true)
+    setShowCopySuccessPopup(true)
     setFadeToast('fade_in')
     setTimeout(() => {
       setFadeToast('fade_out')
     }, 3000);
     setTimeout(() => {
-      setShowCopySuccessToast(false)
+      setShowCopySuccessPopup(false)
     }, 3400);
   };
   return (
@@ -47,7 +47,7 @@ function Header() {
             </div>
           </div>
         }
-        {showCopySuccessToast &&
+        {showCopySuccessPopup &&
           <p className={classnames(styles.copy_popup_text, fadeToast ? styles.fade_in : styles.fade_out)}>복사 되었습니다</p>
         }
       </div>
