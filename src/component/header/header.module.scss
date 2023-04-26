@@ -33,6 +33,7 @@
   height: 100%;
   margin-left: auto;
   background-color: #fff;
+  position: absolute;
   @media (min-width: 768px) {
     position: absolute;
     top: 50%;
@@ -42,12 +43,44 @@
     height: 700px;
   }
 }
-.share_text {
+.close_button {
+  width: 50px;
+}
+.copy_popup_text {
   position: fixed;
   bottom: 40px;
   left: 50%;
   transform: translate(-50%);
   color: #ccc;
-  background-color: #333;
+  background-color: rgba(#000, 0.7);
   // transition: transform 0.2s;
+}
+.fade_in {
+  opacity: 1;
+  animation: fadeIn ease-in-out 0.4s;
+}
+
+.fade_out {
+  opacity: 0;
+  animation: fadeOut ease-in-out 0.4s;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
 }
