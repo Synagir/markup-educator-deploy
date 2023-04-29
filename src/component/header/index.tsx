@@ -1,25 +1,25 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import classnames from 'classnames'
 import styles from "./header.module.scss";
 
 function Header() {
+  const modalRef = useRef();
   const [isQuizListOpened, setIsQuizListOpened] = useState(false)
-  const [showCopySuccessPopup, setShowCopySuccessPopup] = useState<boolean>(false)
-  const [fadeToast, setFadeToast] = useState<'fade_out' | 'fade_in'>('fade_in')
+  const [showCopySuccessPopup, setShowCopySuccessPopup] = useState(false)
+
   function toggleQuizListOpened() {
     setIsQuizListOpened(!isQuizListOpened)
-    if (isQuizListOpened)
-      document.body.style.overflow = 'hidden'
-    else
+    document.body.style.overflow = 'hidden'
+  }
+  function closeQuizList(e: any) {
+    if (modalRef.current === e.target) {
+      setIsQuizListOpened(false)
       document.body.style.overflow = 'auto'
+    }
   }
 
   function copyUrlButtonHandler() {
     setShowCopySuccessPopup(true)
-    setFadeToast('fade_in')
-    setTimeout(() => {
-      setFadeToast('fade_out')
-    }, 3000);
     setTimeout(() => {
       setShowCopySuccessPopup(false)
     }, 3400);
@@ -39,16 +39,16 @@ function Header() {
           dd
         </button>
         {isQuizListOpened &&
-          <div className={styles.dimmed} onClick={toggleQuizListOpened}>
+          <div className={styles.dimmed} onClick={(e) => closeQuizList(e)} ref={modalRef}>
             <div className={styles.menu_area}>
-              <button type="button" className={styles.close_button}>
+              <button type="button" className={styles.close_button} onClick={toggleQuizListOpened}>
                 <span className="blind">닫기</span>
               </button>
             </div>
           </div>
         }
         {showCopySuccessPopup &&
-          <p className={classnames(styles.copy_popup_text, fadeToast ? styles.fade_in : styles.fade_out)}>복사 되었습니다</p>
+          <p className={classnames(styles.copy_popup_text, showCopySuccessPopup && styles.popup_on)}>복사 되었습니다</p>
         }
       </div>
     </header >
