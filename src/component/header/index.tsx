@@ -4,17 +4,17 @@ import styles from "./header.module.scss";
 
 function Header() {
   const modalRef = useRef();
-  const [isQuizListOpened, setIsQuizListOpened] = useState(false)
+  const [quizListOpened, setQuizListOpened] = useState(false)
   const [showCopySuccessPopup, setShowCopySuccessPopup] = useState(false)
 
-  function toggleQuizListOpened() {
-    setIsQuizListOpened(!isQuizListOpened)
-    document.body.style.overflow = 'hidden'
-  }
-  function closeQuizList(e: any) {
+  function toggleQuizListOpened(e: any) {
     if (modalRef.current === e.target) {
-      setIsQuizListOpened(false)
+      setQuizListOpened(false)
       document.body.style.overflow = 'auto'
+    }
+    else {
+      setQuizListOpened(!quizListOpened)
+      document.body.style.overflow = 'hidden'
     }
   }
 
@@ -38,8 +38,9 @@ function Header() {
         <button type="button" onClick={toggleQuizListOpened} className={styles.button}>
           dd
         </button>
-        {isQuizListOpened &&
-          <div className={styles.dimmed} onClick={(e) => closeQuizList(e)} ref={modalRef}>
+        {quizListOpened &&
+          <div className={styles.overlay}>
+            <div className={styles.dimmed} onClick={(e) => toggleQuizListOpened(e)} ref={modalRef} />
             <div className={styles.menu_area}>
               <button type="button" className={styles.close_button} onClick={toggleQuizListOpened}>
                 <span className="blind">닫기</span>
