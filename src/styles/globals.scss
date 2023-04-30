@@ -21,8 +21,7 @@ input,
 textarea,
 select,
 button {
-  font-family: -apple-system, BlinkMacSystemFont, Roboto, 'Segoe UI',
-    'Helvetica Neue', Arial, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, Roboto, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
 }
 
 ul,
@@ -60,6 +59,10 @@ body {
   height: 100%;
 }
 
+button {
+  display: inline-block;
+  margin: 0;
+}
 #__next {
   height: 100%;
 }
