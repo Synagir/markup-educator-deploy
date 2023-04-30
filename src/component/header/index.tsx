@@ -1,5 +1,4 @@
 import { useState } from "react";
-import classnames from 'classnames'
 import styles from "./header.module.scss";
 
 function Header() {
