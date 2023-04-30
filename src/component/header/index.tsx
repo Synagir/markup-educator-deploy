@@ -1,27 +1,19 @@
-import { useState, useRef } from "react";
+import { useState } from "react";
 import classnames from 'classnames'
 import styles from "./header.module.scss";
 
 function Header() {
-  const modalRef = useRef();
   const [quizListOpened, setQuizListOpened] = useState(false)
-  const [showCopySuccessPopup, setShowCopySuccessPopup] = useState(false)
+  const [copySuccessPopupVisible, setCopySuccessPopupVisible] = useState(false)
 
-  function toggleQuizListOpened(e: any) {
-    if (modalRef.current === e.target) {
-      setQuizListOpened(false)
-      document.body.style.overflow = 'auto'
-    }
-    else {
-      setQuizListOpened(!quizListOpened)
-      document.body.style.overflow = 'hidden'
-    }
+  function toggleQuizListOpened() {
+    setQuizListOpened(!quizListOpened)
   }
 
   function copyUrlButtonHandler() {
-    setShowCopySuccessPopup(true)
+    setCopySuccessPopupVisible(true)
     setTimeout(() => {
-      setShowCopySuccessPopup(false)
+      setCopySuccessPopupVisible(false)
     }, 3400);
   };
   return (
@@ -40,7 +32,7 @@ function Header() {
         </button>
         {quizListOpened &&
           <div className={styles.overlay}>
-            <div className={styles.dimmed} onClick={(e) => toggleQuizListOpened(e)} ref={modalRef} />
+            <div className={styles.dimmed} onClick={toggleQuizListOpened} />
             <div className={styles.menu_area}>
               <button type="button" className={styles.close_button} onClick={toggleQuizListOpened}>
                 <span className="blind">닫기</span>
@@ -48,8 +40,8 @@ function Header() {
             </div>
           </div>
         }
-        {showCopySuccessPopup &&
-          <p className={classnames(styles.copy_popup_text, showCopySuccessPopup && styles.popup_on)}>복사 되었습니다</p>
+        {copySuccessPopupVisible &&
+          <p className={styles.copy_popup_text}>복사 되었습니다</p>
         }
       </div>
     </header >
