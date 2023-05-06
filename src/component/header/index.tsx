@@ -7,6 +7,7 @@ function Header() {
 
   function toggleQuizListOpened() {
     setQuizListOpened(!quizListOpened)
+    document.body.classList.toggle(styles.quiz_list_opened, !quizListOpened);
   }
 
   function copyUrlButtonHandler() {
