@@ -4,10 +4,9 @@ import styles from "./header.module.scss";
 function Header() {
   const [quizListOpened, setQuizListOpened] = useState(false)
   const [copySuccessPopupVisible, setCopySuccessPopupVisible] = useState(false)
-
   function toggleQuizListOpened() {
-    setQuizListOpened(!quizListOpened)
     document.body.classList.toggle(styles.quiz_list_opened, !quizListOpened);
+    setQuizListOpened(!quizListOpened)
   }
 
   function copyUrlButtonHandler() {

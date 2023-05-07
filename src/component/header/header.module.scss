@@ -1,6 +1,3 @@
-.quiz_list_opened {
-  overflow: hidden;
-}
 .container {
   display: flex;
   align-items: center;
@@ -74,4 +71,8 @@
   100% {
     opacity: 0;
   }
+}
+// 퀴즈 리스트 modal창이 열렸을 때 body에 적용되는 코드
+.quiz_list_opened {
+  overflow: hidden;
 }
