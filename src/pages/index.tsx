@@ -7,6 +7,7 @@ import { html } from '@codemirror/lang-html';
 import { css } from '@codemirror/lang-css';
 import { historyField } from '@codemirror/commands';
 import Canvas from '@component/Canvas';
+import wrapDebounce from '@lib/score/utils';
 import styles from './index.module.scss';
 
 const htmlDefaultState = `<div class="text">\n\tHello World\n</div>`;
@@ -67,11 +68,11 @@ export default function Index() {
             width="380px"
             height="380px"
             extensions={[html({ autoCloseTags: true })]}
-            onChange={handleHtmlState}
+            onChange={wrapDebounce(handleHtmlState, 1000)}
           />
         </div>
         <div className={classnames(styles.code, { [styles.activate]: !activeHtmlStateTab })}>
-          <CodeMirror value={cssDefaultState} theme={okaidia} width="380px" height="380px" extensions={[css()]} onChange={handleCssState} />
+          <CodeMirror value={cssDefaultState} theme={okaidia} width="380px" height="380px" extensions={[css()]} onChange={wrapDebounce(handleCssState, 1000)} />
         </div>
         <div className={styles.tab}>
           <button
