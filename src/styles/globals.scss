@@ -75,3 +75,7 @@ button {
   height: 1px;
   margin: -1px;
 }
+// modal창이 열렸을 때 body에 적용되는 코드
+.modal_opened {
+  overflow: hidden;
+}

@@ -1,12 +1,11 @@
 import { useState } from "react";
 import styles from "./header.module.scss";
-import body_styles from "./body.module.scss";
 
 function Header() {
   const [quizListOpened, setQuizListOpened] = useState(false)
   const [copySuccessPopupVisible, setCopySuccessPopupVisible] = useState(false)
   function toggleQuizListOpened() {
-    document.body.classList.toggle(body_styles.quiz_list_opened, !quizListOpened);
+    document.body.classList.toggle('modal_opened', !quizListOpened);
     setQuizListOpened(!quizListOpened)
   }
 
