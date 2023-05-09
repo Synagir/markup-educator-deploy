@@ -1,4 +1,4 @@
-export default function wrapDebounce(callback: Function, delay: number): Function {
+export default function wrapDebounce(callback: () => void, delay: number): () => void {
   let timeout;
 
   return function (...args) {
