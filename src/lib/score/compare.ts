@@ -38,7 +38,6 @@ export default async function compare(containerA, containerB) {
   // compare canvas
   const scoreSpectrum = calcSpectrum(userPixels, answerPixels);
   const scorePerfect = calcPixelPerfect(userPixels, answerPixels);
-  console.log(scoreSpectrum, scorePerfect);
 
-  return scoreSpectrum * scorePerfect * 100;
+  return (scoreSpectrum * scorePerfect) ** 10 * 100;
 }
