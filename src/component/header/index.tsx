@@ -4,8 +4,8 @@ import styles from "./header.module.scss";
 function Header() {
   const [quizListOpened, setQuizListOpened] = useState(false)
   const [copySuccessPopupVisible, setCopySuccessPopupVisible] = useState(false)
-
   function toggleQuizListOpened() {
+    document.body.classList.toggle('modal_opened', !quizListOpened);
     setQuizListOpened(!quizListOpened)
   }
 
