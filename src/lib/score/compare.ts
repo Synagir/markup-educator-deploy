@@ -1,21 +1,5 @@
 import { toPixelData } from 'html-to-image';
 
-export default async function compare(containerA, containerB) {
-  const userPixels = await toPixelData(containerA);
-  const answerPixels = await toPixelData(containerB);
-
-  if (userPixels.length !== answerPixels.length) {
-    console.error('Two canvas sizes are not identical');
-  }
-
-  // compare canvas
-  const scoreSpectrum = calcSpectrum(userPixels, answerPixels);
-  const scorePerfect = calcPixelPerfect(userPixels, answerPixels);
-  console.log(scoreSpectrum, scorePerfect);
-
-  return scoreSpectrum * scorePerfect * 100;
-}
-
 function calcSpectrum(userPixels, answerPixels) {
   const pixelLength = userPixels.length;
   const spectrum = new Array(256).fill(0);
@@ -41,4 +25,19 @@ function calcPixelPerfect(userPixels, answerPixels) {
   }
 
   return identicalPixels / pixelLength;
+}
+
+export default async function compare(containerA, containerB) {
+  const userPixels = await toPixelData(containerA);
+  const answerPixels = await toPixelData(containerB);
+
+  if (userPixels.length !== answerPixels.length) {
+    console.error('Two canvas sizes are not identical');
+  }
+
+  // compare canvas
+  const scoreSpectrum = calcSpectrum(userPixels, answerPixels);
+  const scorePerfect = calcPixelPerfect(userPixels, answerPixels);
+
+  return (scoreSpectrum * scorePerfect) ** 10 * 100;
 }

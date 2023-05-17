@@ -4,12 +4,12 @@ import quiz from '@quiz/basic.json';
 import compare from '@lib/score/compare';
 
 export default function Compare() {
-  const userCanvasRef = useRef(null);
-  const answerCanvasRef = useRef(null);
-  const [score, setScore] = useState(0);
+  const userCanvasRef = useRef<HTMLIFrameElement>(null);
+  const answerCanvasRef = useRef<HTMLIFrameElement>(null);
+  const [score, setScore] = useState<number>(0);
 
   async function handleCompare() {
-    setScore(await compare(userCanvasRef.current.getCanvas(), answerCanvasRef.current.getCanvas()));
+    setScore(await compare(userCanvasRef.current, answerCanvasRef.current));
   }
 
   return (

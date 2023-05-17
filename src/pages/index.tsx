@@ -1,39 +1,18 @@
 import { useState } from 'react';
 import classnames from 'classnames';
 import Link from 'next/link';
-import CodeMirror from '@uiw/react-codemirror';
-import { okaidia } from '@uiw/codemirror-theme-okaidia';
-import { html } from '@codemirror/lang-html';
-import { css } from '@codemirror/lang-css';
-import { historyField } from '@codemirror/commands';
 import Canvas from '@component/Canvas';
+import Editor from '@component/Editor';
 import styles from './index.module.scss';
 
 const htmlDefaultState = `<div class="text">\n\tHello World\n</div>`;
 const cssDefaultState = `.text {\n\tcolor: #fff;\n}`;
-const htmlStateFields = { history: historyField };
-const cssStateFields = { history: historyField };
 
 export default function Index() {
   const [htmlState, setHtmlState] = useState(htmlDefaultState);
   const [cssState, setCssState] = useState(cssDefaultState);
   const [activeHtmlStateTab, setActiveCodeTab] = useState(true);
   const [activeUserViewTab, setActiveUserViewTab] = useState(true);
-
-  const handleHtmlState = (_view, viewUpdate) => {
-    const state = viewUpdate.state.toJSON(htmlStateFields).doc;
-    setHtmlState(state);
-    // 테스트용 코드
-    console.log(htmlState);
-    console.log(state);
-  };
-  const handleCssState = (_view, viewUpdate) => {
-    const state = viewUpdate.state.toJSON(cssStateFields).doc;
-    setCssState(state);
-    // 테스트용 코드
-    console.log(cssState);
-    console.log(state);
-  };
 
   return (
     <div className={styles.wrap}>
@@ -61,17 +40,10 @@ export default function Index() {
           </button>
         </div>
         <div className={classnames(styles.code, { [styles.activate]: activeHtmlStateTab })}>
-          <CodeMirror
-            value={htmlDefaultState}
-            theme={okaidia}
-            width="380px"
-            height="380px"
-            extensions={[html({ autoCloseTags: true })]}
-            onChange={handleHtmlState}
-          />
+          <Editor lang="html" initialString={htmlDefaultState} setState={setHtmlState} />
         </div>
         <div className={classnames(styles.code, { [styles.activate]: !activeHtmlStateTab })}>
-          <CodeMirror value={cssDefaultState} theme={okaidia} width="380px" height="380px" extensions={[css()]} onChange={handleCssState} />
+          <Editor lang="css" initialString={cssDefaultState} setState={setCssState} />
         </div>
         <div className={styles.tab}>
           <button
