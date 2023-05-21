@@ -18,7 +18,8 @@
       "@styles/*": ["styles/*"],
       "@quiz/*": ["quiz/*"],
       "@lib/*": ["lib/*"],
-      "@component/*": ["component/*"]
+      "@component/*": ["component/*"],
+      "@model/*": ["model/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
