@@ -1,10 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { db } from '@model/db';
-import CodeMirror from '@uiw/react-codemirror';
-import { okaidia } from '@uiw/codemirror-theme-okaidia';
-import { html } from '@codemirror/lang-html';
-import { css } from '@codemirror/lang-css';
+import Editor from '@component/Editor';
 
 const router = 'test1';
 
@@ -46,8 +43,8 @@ export default function Test1() {
 
   return (
     <div>
-      <CodeMirror value={htmlState} theme={okaidia} width="380px" height="380px" extensions={[html({ autoCloseTags: true })]} onChange={updateState} />
-      <CodeMirror value={cssState} theme={okaidia} width="380px" height="380px" extensions={[css()]} onChange={updateState} />
+      <Editor lang="html" initialString={htmlState} setState={updateState} />
+      <Editor lang="html" initialString={htmlState} setState={updateState} />
     </div>
   );
 }
