@@ -34,12 +34,11 @@ export default function Test1() {
       console.error(error);
     }
   };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
-    if (dataBaseItem) {
-      setHtmlState(dataBaseItem?.htmlState);
-      setCssState(dataBaseItem?.cssState);
-    }
-  }, [dataBaseItem]);
+    setHtmlState(dataBaseItem?.htmlState);
+    setCssState(dataBaseItem?.cssState);
+  });
 
   return (
     <div>
