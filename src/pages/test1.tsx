@@ -34,16 +34,17 @@ export default function Test1() {
       console.error(error);
     }
   };
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
-    setHtmlState(dataBaseItem?.htmlState);
-    setCssState(dataBaseItem?.cssState);
-  });
+    if (dataBaseItem) {
+      setHtmlState(dataBaseItem?.htmlState);
+      setCssState(dataBaseItem?.cssState);
+    }
+  }, [dataBaseItem]);
 
   return (
     <div>
       <Editor lang="html" initialString={htmlState} setState={updateState} />
-      <Editor lang="html" initialString={htmlState} setState={updateState} />
+      <Editor lang="css" initialString={cssState} setState={updateState} />
     </div>
   );
 }
