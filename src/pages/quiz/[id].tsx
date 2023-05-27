@@ -1,18 +1,18 @@
 import { useState } from 'react';
-import Header from '@component/header'
-import quizList from '@quiz/quiz_list.json';
+import classnames from 'classnames';
+import fs from 'fs';
+import Header from '@component/header';
 import Canvas from '@component/Canvas';
 import Editor from '@component/Editor';
-import classnames from 'classnames'
 import styles from './quiz.module.scss';
 
 interface Quiz {
-  id: string,
-  name: string,
-  userHTML: string,
-  userCSS: string,
-  answerHTML: string,
-  answerCSS: string
+  id: string;
+  name: string;
+  userHTML: string;
+  userCSS: string;
+  answerHTML: string;
+  answerCSS: string;
 }
 
 export default function MainQuiz({ id, name, userHTML, userCSS, answerHTML, answerCSS }: Quiz) {
@@ -83,9 +83,10 @@ export default function MainQuiz({ id, name, userHTML, userCSS, answerHTML, answ
 
 
 export function getAllQuizIds() {
-  return quizList.map((quiz) => ({
+  const fileNames = fs.readdirSync('./pages/quiz/quizListFile');
+  return fileNames.map((fileName) => ({
     params: {
-      id: quiz.id
+      id: fileName.replace('.json', ''),
     },
   }));
 }
@@ -94,21 +95,21 @@ export async function getStaticPaths() {
   const paths = getAllQuizIds();
   return {
     paths,
-    fallback: false,
+    fallback: false
   }
 }
 
 
 export async function getStaticProps({ params }) {
-  const index = Number(params.id - 1)
+  // [D] string으로 바로 변환이 안됨
+  const index = Number(params.id).toString()
+
+  const quizFile = fs.readFileSync(`./pages/quiz/quizListFile/${index}.json`)
+  const quizFileToString = quizFile.toString();
+  const quizFileData = JSON.parse(quizFileToString)
   return {
     props: {
-      id: quizList[index].id,
-      name: quizList[index].name,
-      userHTML: quizList[index].userHTML,
-      userCSS: quizList[index].userCSS,
-      answerHTML: quizList[index].answerHTML,
-      answerCSS: quizList[index].answerCSS,
+      ...quizFileData
     },
   };
 }

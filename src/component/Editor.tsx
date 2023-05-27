@@ -13,3 +13,4 @@ const LANG_MAP = {
 export default function Editor({ lang, initialString, setState }: { lang: string; initialString: string; setState: Dispatch<SetStateAction<string>> }) {
   return <CodeMirror value={initialString} theme={okaidia} width="380px" height="380px" extensions={LANG_MAP[lang]} onChange={wrapDebounce(setState, 1000)} />;
 }
+
