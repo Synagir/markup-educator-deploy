@@ -10,6 +10,7 @@
   display: flex;
   flex-wrap: wrap;
   width: 100%;
+  max-width: 500px;
   padding: 30px 25px 50px;
 }
 
@@ -67,6 +68,10 @@
 }
 
 @include mediaQuery('tablet') {
+  .main {
+    max-width: 970px;
+  }
+
   .box,
   .result {
     display: flex;
@@ -103,6 +108,7 @@
 @include mediaQuery('pc_wide') {
   .main {
     flex-wrap: wrap;
+    max-width: 1890px;
   }
 
   .grade {
