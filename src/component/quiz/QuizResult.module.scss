@@ -16,7 +16,7 @@
   margin-top: 10px;
 }
 
-@include mediaQuery('PcWide') {
+@include mediaQuery('pc_wide') {
   .wrap {
     justify-content: center;
   }

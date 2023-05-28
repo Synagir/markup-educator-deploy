@@ -21,11 +21,11 @@
     @media (min-width: 768px) {
       @content;
     }
-  } @else if($breakpoint == 'Pc') {
+  } @else if($breakpoint == 'pc') {
     @media (min-width: 1080px) {
       @content;
     }
-  } @else if($breakpoint == 'PcWide') {
+  } @else if($breakpoint == 'pc_wide') {
     @media (min-width: 1600px) {
       @content;
     }
