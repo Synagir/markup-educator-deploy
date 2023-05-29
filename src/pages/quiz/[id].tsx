@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import classnames from 'classnames';
-import fs from 'fs';
+import readFile from '@lib/quizFileRead/file-read';
 import Header from '@component/header';
 import Canvas from '@component/Canvas';
 import Editor from '@component/Editor';
@@ -81,32 +81,17 @@ export default function MainQuiz({ id, name, userHTML, userCSS, answerHTML, answ
   );
 }
 
-
-export function getAllQuizIds() {
-  const fileNames = fs.readdirSync('./pages/quiz/quizListFile');
-  return fileNames.map((fileName) => ({
-    params: {
-      id: fileName.replace('.json', ''),
-    },
-  }));
-}
-
 export async function getStaticPaths() {
-  const paths = getAllQuizIds();
+  const paths = readFile(true)
   return {
     paths,
     fallback: false
   }
 }
 
-
 export async function getStaticProps({ params }) {
-  // [D] string으로 바로 변환이 안됨
   const index = Number(params.id).toString()
-
-  const quizFile = fs.readFileSync(`./pages/quiz/quizListFile/${index}.json`)
-  const quizFileToString = quizFile.toString();
-  const quizFileData = JSON.parse(quizFileToString)
+  const quizFileData = readFile(false, index)
   return {
     props: {
       ...quizFileData
