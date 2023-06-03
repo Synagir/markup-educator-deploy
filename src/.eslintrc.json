@@ -4,13 +4,7 @@
     "project": ["tsconfig.json"],
     "createDefaultProgram": true
   },
-  "plugins": [
-    "@typescript-eslint",
-    "import",
-    "react",
-    "jsx-a11y",
-    "react-hooks"
-  ],
+  "plugins": ["@typescript-eslint", "import", "react", "jsx-a11y", "react-hooks"],
   "env": {
     "browser": true,
     "node": true
@@ -28,6 +22,7 @@
   "rules": {
     "react/react-in-jsx-scope": "off",
     "react/jsx-props-no-spreading": "off",
+    "react/require-default-props": "off",
     "import/no-extraneous-dependencies": "off"
   }
 }

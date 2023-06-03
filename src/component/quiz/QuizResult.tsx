@@ -2,11 +2,11 @@ import Link from 'next/link';
 import classnames from 'classnames';
 import styles from './QuizResult.module.scss';
 
-type TProps = {
+interface QuizResultProps {
   wrapperClassName?: string;
-};
+}
 
-export default function QuizResult({ wrapperClassName }: TProps) {
+export default function QuizResult({ wrapperClassName }: QuizResultProps) {
   return (
     <div className={classnames(styles.wrap, wrapperClassName)}>
       <p className={styles.text}>
