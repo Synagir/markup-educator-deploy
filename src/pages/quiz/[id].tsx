@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import classnames from 'classnames';
-import readAllQuizFile, { readQuizFileById } from '@lib/quiz/read';
+import { readQuizFileList, readQuizFileById } from '@lib/quiz/read';
 import Header from '@component/header';
 import Canvas from '@component/Canvas';
 import Editor from '@component/Editor';
@@ -82,7 +82,7 @@ export default function MainQuiz({ id, name, userHTML, userCSS, answerHTML, answ
 }
 
 export async function getStaticPaths() {
-  const paths = readAllQuizFile()
+  const paths = readQuizFileList();
   return {
     paths,
     fallback: false
@@ -90,8 +90,7 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params }) {
-  const index = Number(params.id).toString()
-  const quizFileData = readQuizFileById(index)
+  const quizFileData = readQuizFileById(params.id);
   return {
     props: {
       ...quizFileData

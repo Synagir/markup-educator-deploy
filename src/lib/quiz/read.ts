@@ -1,6 +1,6 @@
 import fs from 'fs';
 
-export default function readAllQuizFile() {
+export function readQuizFileList() {
   const fileNames = fs.readdirSync('./quiz');
   return fileNames.map((fileName) => ({
     params: {
@@ -10,9 +10,7 @@ export default function readAllQuizFile() {
 }
 
 export function readQuizFileById(index?: string) {
-  const quizFile = fs.readFileSync(`./quiz/${index}.json`);
-  const quizFileToString = quizFile.toString();
-  const quizFileData = JSON.parse(quizFileToString);
+  const quizFileData = JSON.parse(fs.readFileSync(`./quiz/${index}.json`, 'utf8'));
   return {
     ...quizFileData,
   };
