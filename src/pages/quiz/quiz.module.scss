@@ -1,0 +1,46 @@
+.code {
+  overflow: hidden;
+  border: 1px solid #424242;
+  border-radius: 0 4px 4px 4px;
+}
+.tab {
+  display: flex;
+  margin-top: 50px;
+}
+.button_tab {
+  position: relative;
+  width: 107px;
+  margin-bottom: 0;
+  padding: 7px 0;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+  box-shadow: none;
+  font-size: 14px;
+  line-height: 17px;
+
+  & + .button_tab {
+    margin-left: 1px;
+  }
+
+  &.activate {
+    background-color: #19b3e6;
+  }
+}
+
+.code {
+  overflow: hidden;
+  display: none;
+  width: 380px;
+  border: 1px solid #424242;
+  border-radius: 0 4px 4px 4px;
+
+  &.activate {
+    display: block;
+  }
+}
+.result {
+  .code {
+    width: 380px;
+    height: 380px;
+  }
+}

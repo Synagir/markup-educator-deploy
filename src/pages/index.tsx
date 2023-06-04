@@ -74,7 +74,7 @@ export default function Index() {
           </div>
         </div>
         <div className={styles.box}>
-          <Link href="./" className={classnames(styles.link_start, 'contrast')}>
+          <Link href="./quiz/1" className={classnames(styles.link_start, 'contrast')}>
             시작하기
           </Link>
         </div>
@@ -84,7 +84,7 @@ export default function Index() {
           {/* 문제 수 받아서 처리 */}
           <ul className={styles.list_quiz}>
             <li className={styles.item_quiz}>
-              <Link href="./" className={styles.link_quiz}>
+              <Link href="./quiz/1" className={styles.link_quiz}>
                 # Quiz 01
               </Link>
             </li>

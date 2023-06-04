@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react';
 import Canvas from '@component/Canvas';
-import quiz from '@quiz/basic.json';
+import quiz from '@quiz/1.json';
 import compare from '@lib/score/compare';
 
 export default function Compare() {
