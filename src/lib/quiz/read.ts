@@ -11,7 +11,5 @@ export function readQuizFileList() {
 
 export function readQuizFileById(index?: string) {
   const quizFileData = JSON.parse(fs.readFileSync(`./quiz/${index}.json`, 'utf8'));
-  return {
-    ...quizFileData,
-  };
+  return quizFileData;
 }
