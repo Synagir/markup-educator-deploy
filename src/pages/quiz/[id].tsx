@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import classnames from 'classnames';
-import { readQuizFileList, readQuizFileById } from '@lib/quiz/read';
+import { readQuizFileList, readQuizFileById } from '@lib/quiz/readFiles';
 import Header from '@component/header';
-import Canvas from '@component/Canvas';
-import Editor from '@component/Editor';
+import QuizEditor from '@component/quiz/QuizEditor';
+import QuizResult from '@component/quiz/QuizResult';
+import QuizView from '@component/quiz/QuizView';
 import styles from './quiz.module.scss';
 
 interface Quiz {
@@ -15,68 +15,27 @@ interface Quiz {
   answerCSS: string;
 }
 
-export default function MainQuiz({ id, name, userHTML, userCSS, answerHTML, answerCSS }: Quiz) {
+export default function QuizPage({ id, name, userHTML, userCSS, answerHTML, answerCSS }: Quiz) {
   const [htmlState, setHtmlState] = useState(userHTML);
   const [cssState, setCssState] = useState(userCSS);
   const [activeHtmlStateTab, setActiveCodeTab] = useState(true);
   const [activeUserViewTab, setActiveUserViewTab] = useState(true);
   return (
-    <div>
+    <div className={styles.wrap}>
       <Header />
-      <div className={styles.tab}>
-        <button
-          type="button"
-          className={classnames(styles.button_tab, {
-            [styles.activate]: activeHtmlStateTab,
-          })}
-          onClick={() => setActiveCodeTab(true)}
-        >
-          html
-        </button>
-        <button
-          type="button"
-          className={classnames(styles.button_tab, {
-            [styles.activate]: !activeHtmlStateTab,
-          })}
-          onClick={() => setActiveCodeTab(false)}
-        >
-          css
-        </button>
-      </div>
-      <div className={classnames(styles.code, { [styles.activate]: activeHtmlStateTab })}>
-        <Editor lang="html" initialString={htmlState} setState={setHtmlState} />
-      </div>
-      <div className={classnames(styles.code, { [styles.activate]: !activeHtmlStateTab })}>
-        <Editor lang="css" initialString={cssState} setState={setCssState} />
-      </div>
-      <div className={styles.tab}>
-        <button
-          type="button"
-          className={classnames(styles.button_tab, {
-            [styles.activate]: activeUserViewTab,
-          })}
-          onClick={() => setActiveUserViewTab(true)}
-        >
-          user
-        </button>
-        <button
-          type="button"
-          className={classnames(styles.button_tab, {
-            [styles.activate]: !activeUserViewTab,
-          })}
-          onClick={() => setActiveUserViewTab(false)}
-        >
-          answer
-        </button>
-      </div>
-      <div className={styles.result}>
-        <div className={classnames(styles.code, { [styles.activate]: activeUserViewTab })}>
-          <Canvas html={htmlState} css={cssState} />
-        </div>
-        <div className={classnames(styles.code, { [styles.activate]: !activeUserViewTab })}>
-          <Canvas html="" css="" />
-        </div>
-      </div>
+      <main className={styles.main}>
+        <QuizEditor
+          wrapperClass={styles.editor}
+          activate={activeHtmlStateTab}
+          html={htmlState}
+          css={cssState}
+          handleActivate={setActiveCodeTab}
+          handleHtml={setHtmlState}
+          handleCss={setCssState}
+        />
+        <QuizView wrapperClass={styles.view} activate={activeUserViewTab} html={htmlState} css={cssState} handleActivate={setActiveUserViewTab} />
+        <QuizResult wrapperClassName={styles.grade} />
+      </main>
     </div>
   );
 }
@@ -85,15 +44,13 @@ export async function getStaticPaths() {
   const paths = readQuizFileList();
   return {
     paths,
-    fallback: false
-  }
+    fallback: false,
+  };
 }
 
 export async function getStaticProps({ params }) {
   const quizFileData = readQuizFileById(params.id);
   return {
-    props: {
-      ...quizFileData
-    },
+    props: quizFileData,
   };
 }

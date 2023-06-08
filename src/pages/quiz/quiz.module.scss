@@ -1,12 +1,19 @@
-.code {
-  overflow: hidden;
-  border: 1px solid #424242;
-  border-radius: 0 4px 4px 4px;
-}
-.tab {
+.wrap {
   display: flex;
-  margin-top: 50px;
+  flex-direction: column;
+  align-items: center;
+  background-color: #202020;
+  min-height: 100%;
 }
+
+.main {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  max-width: 500px;
+  padding: 30px 25px 50px;
+}
+
 .button_tab {
   position: relative;
   width: 107px;
@@ -27,20 +34,45 @@
   }
 }
 
-.code {
-  overflow: hidden;
-  display: none;
-  width: 380px;
-  border: 1px solid #424242;
-  border-radius: 0 4px 4px 4px;
+.editor,
+.view,
+.grade {
+  flex: 1 0 100%;
+}
 
-  &.activate {
-    display: block;
+.view {
+  order: 1;
+}
+
+@include mediaQuery('tablet') {
+  .main {
+    max-width: 970px;
+  }
+
+  .editor,
+  .view {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .tab {
+    display: none;
   }
 }
-.result {
-  .code {
-    width: 380px;
-    height: 380px;
+
+@include mediaQuery('pc_wide') {
+  .main {
+    flex-wrap: wrap;
+    max-width: 1890px;
+  }
+
+  .grade {
+    flex-basis: 50%;
+  }
+
+  .view {
+    order: 0;
+    flex-basis: 50%;
+    margin-top: 80px;
   }
 }
