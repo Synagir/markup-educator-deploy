@@ -27,7 +27,12 @@ function calcPixelPerfect(userPixels, answerPixels) {
   return identicalPixels / pixelLength;
 }
 
-export default async function compare(containerA, containerB) {
+export default async function compareCanvas(containerA, containerB) {
+  if ((containerA || containerB) === false) {
+    console.log('canvas ref undefined');
+    return 0;
+  }
+
   const userPixels = await toPixelData(containerA);
   const answerPixels = await toPixelData(containerB);
 
@@ -39,5 +44,6 @@ export default async function compare(containerA, containerB) {
   const scoreSpectrum = calcSpectrum(userPixels, answerPixels);
   const scorePerfect = calcPixelPerfect(userPixels, answerPixels);
 
-  return (scoreSpectrum * scorePerfect) ** 10 * 100;
+  // 1점 만점
+  return (scoreSpectrum * scorePerfect) ** 10;
 }

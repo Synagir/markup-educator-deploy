@@ -1,3 +1,4 @@
+import { MutableRefObject } from 'react';
 import classnames from 'classnames';
 import Canvas from '@component/Canvas';
 import styles from './QuizView.module.scss';
@@ -10,9 +11,21 @@ interface QuizViewProps {
   answerHtml: string;
   answerCss: string;
   handleActivate: (status: boolean) => void;
+  userCanvasRef: MutableRefObject<HTMLIFrameElement>;
+  answerCanvasRef: MutableRefObject<HTMLIFrameElement>;
 }
 
-export default function QuizView({ wrapperClass, activate, userHtml, userCss, answerHtml, answerCss, handleActivate }: QuizViewProps) {
+export default function QuizView({
+  wrapperClass,
+  activate,
+  userHtml,
+  userCss,
+  answerHtml,
+  answerCss,
+  handleActivate,
+  userCanvasRef,
+  answerCanvasRef,
+}: QuizViewProps) {
   return (
     <div className={classnames(styles.wrap, wrapperClass)}>
       <div className={styles.tab}>
@@ -39,13 +52,13 @@ export default function QuizView({ wrapperClass, activate, userHtml, userCss, an
         <div className={classnames(styles.code, { [styles.activate]: activate })}>
           <span className={styles.code_label}>user</span>
           <div className={styles.canvas}>
-            <Canvas html={userHtml} css={userCss} />
+            <Canvas html={userHtml} css={userCss} ref={userCanvasRef} />
           </div>
         </div>
         <div className={classnames(styles.code, { [styles.activate]: !activate })}>
           <span className={styles.code_label}>answer</span>
           <div className={styles.canvas}>
-            <Canvas html={answerHtml} css={answerCss} />
+            <Canvas html={answerHtml} css={answerCss} ref={answerCanvasRef} />
           </div>
         </div>
       </div>

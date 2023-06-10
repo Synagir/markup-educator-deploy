@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { readQuizFileList, readQuizFileById } from '@lib/quiz/readFiles';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { db } from '@model/db';
@@ -6,6 +6,7 @@ import Header from '@component/header';
 import QuizEditor from '@component/quiz/QuizEditor';
 import QuizResult from '@component/quiz/QuizResult';
 import QuizView from '@component/quiz/QuizView';
+import compareCanvas from '@lib/score/compare';
 import styles from './quiz.module.scss';
 
 interface QuizParams {
@@ -23,6 +24,9 @@ export default function Quiz({ id, name, userHTML, userCSS, answerHTML, answerCS
   const [activeHtmlStateTab, setActiveCodeTab] = useState(true);
   const [activeUserViewTab, setActiveUserViewTab] = useState(true);
   const [debouncing, setDebouncing] = useState(false);
+  const userCanvasRef = useRef<HTMLIFrameElement>(null);
+  const answerCanvasRef = useRef<HTMLIFrameElement>(null);
+  const [score, setScore] = useState(0);
 
   // db에서 코드 불러오기
   const dataBaseItem = useLiveQuery(() => db.markups.where('id').equals(id).toArray())?.shift();
@@ -45,14 +49,17 @@ export default function Quiz({ id, name, userHTML, userCSS, answerHTML, answerCS
 
   useEffect(() => {
     console.log('HTML or CSS changed');
-    // update index db
+    // db에 코드 저장
     try {
       db.markups.put({ id, htmlState: userHtmlString, cssState: userCssString }, id);
     } catch (error) {
       console.error(error);
     }
-
     // 채점
+    async function handleCompare() {
+      setScore(await compareCanvas(userCanvasRef.current, answerCanvasRef.current));
+    }
+    handleCompare();
   }, [userHtmlString, userCssString]);
 
   return (
@@ -77,8 +84,10 @@ export default function Quiz({ id, name, userHTML, userCSS, answerHTML, answerCS
           answerHtml={answerHTML}
           answerCss={answerCSS}
           handleActivate={setActiveUserViewTab}
+          userCanvasRef={userCanvasRef}
+          answerCanvasRef={answerCanvasRef}
         />
-        <QuizResult wrapperClassName={styles.grade} />
+        <QuizResult wrapperClassName={styles.grade} score={score} debouncing={debouncing} />
       </main>
     </div>
   );
