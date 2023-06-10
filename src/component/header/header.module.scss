@@ -1,14 +1,16 @@
+@use '~styles/variables.scss' as v;
+
 .container {
   display: flex;
   align-items: center;
-  width: 100%;
   padding: 0 20px;
   font-size: 18px;
-  background-color: #e2e2e2;
+  background-color: #526159;
 }
 .title {
   font-size: 14px;
   line-height: 40px;
+  color: v.$title;
 }
 .button_area {
   margin-left: auto;
@@ -16,9 +18,34 @@
 .button {
   width: 30px;
   height: 30px;
+  border: 1px solid #ddd;
   vertical-align: top;
   & + & {
     margin-left: 10px;
+  }
+}
+.quiz_button {
+  position: relative;
+  width: 30px;
+  height: 30px;
+  border: none;
+  vertical-align: top;
+  background-color: transparent;
+  span {
+    position: absolute;
+    width: 30px;
+    height: 5px;
+    top: 2px;
+    right: 0;
+    left: 0;
+    border-radius: 5px;
+    background-color: #ddd;
+    &:nth-child(2) {
+      top: 12px;
+    }
+    &:nth-child(3) {
+      top: 22px;
+    }
   }
 }
 .overlay {
@@ -40,7 +67,7 @@
   right: 0;
   width: 315px;
   height: 100%;
-  background-color: #fff;
+  background-color: #202020;
   @media (min-width: 768px) {
     top: 50%;
     left: 50%;
@@ -49,9 +76,41 @@
     width: 500px;
     height: 700px;
   }
+  .title {
+    display: block;
+    padding: 0 50px;
+    font-size: 25px;
+    text-align: center;
+  }
+}
+.header {
+  position: relative;
 }
 .close_button {
-  width: 50px;
+  position: absolute;
+  left: 0;
+  width: 40px;
+  height: 40px;
+  background-color: #fff;
+}
+.quiz_box {
+  margin-top: 10px;
+  text-align: center;
+  color: #ddd;
+  & + & {
+    margin-top: 20px;
+  }
+}
+.quiz_level {
+  font-size: 22px;
+}
+.list_quiz {
+  margin-top: 10px;
+}
+.item_quiz {
+  & + & {
+    margin-top: 5px;
+  }
 }
 .copy_popup_text {
   position: fixed;

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Link from 'next/link';
 import styles from "./header.module.scss";
 
 function Header() {
@@ -26,16 +27,51 @@ function Header() {
         <button type="button" className={styles.button} onClick={copyUrlButtonHandler}>
           <span className="blind">공유</span>
         </button>
-        <button type="button" onClick={toggleQuizListOpened} className={styles.button}>
-          dd
+        <button type="button" onClick={toggleQuizListOpened} className={styles.quiz_button}>
+          <span />
+          <span />
+          <span />
+          <span className="blind">퀴즈목록</span>
         </button>
         {quizListOpened &&
           <div className={styles.overlay}>
             <div className={styles.dimmed} onClick={toggleQuizListOpened} />
             <div className={styles.menu_area}>
-              <button type="button" className={styles.close_button} onClick={toggleQuizListOpened}>
-                <span className="blind">닫기</span>
-              </button>
+              <div className={styles.header}>
+                <button type="button" className={styles.close_button} onClick={toggleQuizListOpened}>
+                  <span className="blind">닫기</span>
+                </button>
+                <strong className={styles.title}>
+                  퀴즈 리스트
+                </strong>
+              </div>
+              <div className={styles.quiz_box}>
+                <em className={styles.quiz_level}>초급</em>
+                {/* 문제 수 받아서 처리 */}
+                <ul className={styles.list_quiz}>
+                  <li className={styles.item_quiz}>
+                    <Link href="./quiz/1" className={styles.link_quiz}>
+                      # Quiz 01
+                    </Link>
+                  </li>
+                  <li className={styles.item_quiz}>
+                    <Link href="./quiz/2" className={styles.link_quiz}>
+                      # Quiz 02
+                    </Link>
+                  </li>
+                </ul>
+              </div>
+              <div className={styles.quiz_box}>
+                <em className={styles.quiz_level}>중급</em>
+                {/* 문제 수 받아서 처리 */}
+                <ul className={styles.list_quiz}>
+                  <li className={styles.item_quiz}>
+                    <Link href="./" className={styles.link_quiz}>
+                      # Quiz 01
+                    </Link>
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
         }
