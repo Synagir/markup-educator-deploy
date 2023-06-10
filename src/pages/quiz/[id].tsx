@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 import { readQuizFileList, readQuizFileById } from '@lib/quiz/readFiles';
+import { useLiveQuery } from 'dexie-react-hooks';
+import { db } from '@model/db';
 import Header from '@component/header';
 import QuizEditor from '@component/quiz/QuizEditor';
 import QuizResult from '@component/quiz/QuizResult';
@@ -17,10 +19,17 @@ interface QuizParams {
 
 export default function Quiz({ id, name, userHTML, userCSS, answerHTML, answerCSS }: QuizParams) {
   const [userHtmlString, setUserHtmlString] = useState(userHTML);
-  const [userCssString, setuserCssString] = useState(userCSS);
+  const [userCssString, setUserCssString] = useState(userCSS);
   const [activeHtmlStateTab, setActiveCodeTab] = useState(true);
   const [activeUserViewTab, setActiveUserViewTab] = useState(true);
   const [debouncing, setDebouncing] = useState(false);
+
+  // db에서 코드 불러오기
+  const dataBaseItem = useLiveQuery(() => db.markups.where('id').equals(id).toArray())?.shift();
+  if (dataBaseItem) {
+    setUserHtmlString(dataBaseItem.htmlState);
+    setUserCssString(dataBaseItem.cssState);
+  }
 
   // 밑의 2개의 useEffect를 하나로 합치는게 알고리즘적으로는 더 이상적?
   useEffect(() => {
@@ -37,7 +46,12 @@ export default function Quiz({ id, name, userHTML, userCSS, answerHTML, answerCS
   useEffect(() => {
     console.log('HTML or CSS changed');
     // update index db
-    // update user canvas (canvas에 넘기는것으로 구현. 여기 useEffect에서 작동하지 않음)
+    try {
+      db.markups.put({ id, htmlState: userHtmlString, cssState: userCssString }, id);
+    } catch (error) {
+      console.error(error);
+    }
+
     // 채점
   }, [userHtmlString, userCssString]);
 
@@ -48,14 +62,22 @@ export default function Quiz({ id, name, userHTML, userCSS, answerHTML, answerCS
         <QuizEditor
           wrapperClass={styles.editor}
           activate={activeHtmlStateTab}
-          html={userHTML}
-          css={userCSS}
+          html={userHtmlString}
+          css={userCssString}
           handleActivate={setActiveCodeTab}
           handleHtml={setUserHtmlString}
-          handleCss={setuserCssString}
+          handleCss={setUserCssString}
           handleDebouncing={setDebouncing}
         />
-        <QuizView wrapperClass={styles.view} activate={activeUserViewTab} html={userHtmlString} css={userCssString} handleActivate={setActiveUserViewTab} />
+        <QuizView
+          wrapperClass={styles.view}
+          activate={activeUserViewTab}
+          userHtml={userHtmlString}
+          userCss={userCssString}
+          answerHtml={answerHTML}
+          answerCss={answerCSS}
+          handleActivate={setActiveUserViewTab}
+        />
         <QuizResult wrapperClassName={styles.grade} />
       </main>
     </div>
