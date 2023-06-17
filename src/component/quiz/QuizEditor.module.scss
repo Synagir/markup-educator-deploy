@@ -3,11 +3,12 @@
   width: 107px;
   margin-bottom: 0;
   padding: 7px 0;
-  border-bottom-right-radius: 0;
-  border-bottom-left-radius: 0;
+  border-radius: 4px 4px 0 0;
   box-shadow: none;
+  background-color: rgba(#19b3e6, 0.2);
   font-size: 14px;
   line-height: 17px;
+  color: #eee;
 
   & + .button_tab {
     margin-left: 1px;
@@ -15,6 +16,7 @@
 
   &.activate {
     background-color: #19b3e6;
+    color: #fff;
   }
 }
 
