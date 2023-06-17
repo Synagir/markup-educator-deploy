@@ -1,6 +1,7 @@
 import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import classnames from 'classnames';
 import Editor from '@component/Editor';
+import QuizTabButton from '@component/quiz/QuizTabButton';
 import styles from './QuizEditor.module.scss';
 
 interface QuizEditorProps {
@@ -25,24 +26,8 @@ export default function QuizEditor({ wrapperClass, activate, html, css, handleAc
   return (
     <div className={classnames(styles.wrap, wrapperClass)}>
       <div className={styles.tab}>
-        <button
-          type="button"
-          className={classnames(styles.button_tab, {
-            [styles.activate]: activate,
-          })}
-          onClick={() => handleActivate(true)}
-        >
-          HTML
-        </button>
-        <button
-          type="button"
-          className={classnames(styles.button_tab, {
-            [styles.activate]: !activate,
-          })}
-          onClick={() => handleActivate(false)}
-        >
-          CSS
-        </button>
+        <QuizTabButton isActivate={activate} handleClick={handleActivate} activateTabType innerText="HTML" />
+        <QuizTabButton isActivate={!activate} handleClick={handleActivate} activateTabType={false} innerText="CSS" />
       </div>
       <div className={classnames(styles.code, { [styles.activate]: activate })}>
         <span className={styles.code_label}>html</span>
