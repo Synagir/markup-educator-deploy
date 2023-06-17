@@ -1,0 +1,29 @@
+.main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.editor_wrap {
+  display: flex;
+  gap: 50px;
+
+  & > * {
+    width: 500px;
+    height: 500px;
+  }
+}
+
+.canvas_wrap {
+  display: flex;
+  gap: 50px;
+
+  & > * {
+    width: 500px;
+    height: 500px;
+  }
+}
+
+.control_wrap {
+  width: 500px;
+}
