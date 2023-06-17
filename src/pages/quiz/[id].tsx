@@ -12,15 +12,15 @@ import styles from './quiz.module.scss';
 interface QuizParams {
   id: string;
   name: string;
-  userHTML: string;
-  userCSS: string;
-  answerHTML: string;
-  answerCSS: string;
+  defaultUserHtml: string;
+  defaultUserCss: string;
+  answerHtml: string;
+  answerCss: string;
 }
 
-export default function Quiz({ id, name, userHTML, userCSS, answerHTML, answerCSS }: QuizParams) {
-  const [userHtmlString, setUserHtmlString] = useState(userHTML);
-  const [userCssString, setUserCssString] = useState(userCSS);
+export default function Quiz({ id, name, defaultUserHtml, defaultUserCss, answerHtml, answerCss }: QuizParams) {
+  const [userHtml, setUserHtml] = useState(defaultUserHtml);
+  const [userCss, setUserCss] = useState(defaultUserCss);
   const [activeHtmlStateTab, setActiveCodeTab] = useState(true);
   const [activeUserViewTab, setActiveUserViewTab] = useState(true);
   const [debouncing, setDebouncing] = useState(false);
@@ -30,38 +30,25 @@ export default function Quiz({ id, name, userHTML, userCSS, answerHTML, answerCS
   // db에서 코드 불러오기
   const dataBaseItem = useLiveQuery(() => db.markups.where('id').equals(id).toArray())?.shift();
   if (dataBaseItem) {
-    setUserHtmlString(dataBaseItem.htmlState);
-    setUserCssString(dataBaseItem.cssState);
+    setUserHtml(dataBaseItem.htmlState);
+    setUserCss(dataBaseItem.cssState);
   }
 
-  // 밑의 2개의 useEffect를 하나로 합치는게 알고리즘적으로는 더 이상적?
   useEffect(() => {
-    if (debouncing) {
-      console.log('DEBOUNCING: true');
-      // DEBOUNCING
-      // 채점중 문구 표시
-    } else {
-      console.log('DEBOUNCING: false');
-      // 채점 점수 보여줌
-    }
-  }, [debouncing]);
-
-  useEffect(() => {
-    console.log('HTML or CSS changed');
     // db에 코드 저장
     try {
-      db.markups.put({ id, htmlState: userHtmlString, cssState: userCssString }, id);
+      db.markups.put({ id, htmlState: userHtml, cssState: userCss }, id);
     } catch (error) {
       console.error(error);
     }
     // 채점
     async function handleCompare() {
       setComparing(true);
-      setScore(await compareMarkup(userHtmlString, userCssString, answerHTML, answerCSS));
+      setScore(await compareMarkup(userHtml, userCss, answerHtml, answerCss));
       setComparing(false);
     }
     handleCompare();
-  }, [userHtmlString, userCssString, answerHTML, answerCSS, id]);
+  }, [userHtml, userCss, answerHtml, answerCss, id]);
 
   return (
     <div className={styles.wrap}>
@@ -70,20 +57,20 @@ export default function Quiz({ id, name, userHTML, userCSS, answerHTML, answerCS
         <QuizEditor
           wrapperClass={styles.editor}
           activate={activeHtmlStateTab}
-          html={userHtmlString}
-          css={userCssString}
+          html={userHtml}
+          css={userCss}
           handleActivate={setActiveCodeTab}
-          handleHtml={setUserHtmlString}
-          handleCss={setUserCssString}
+          handleHtml={setUserHtml}
+          handleCss={setUserCss}
           handleDebouncing={setDebouncing}
         />
         <QuizView
           wrapperClass={styles.view}
           activate={activeUserViewTab}
-          userHtml={userHtmlString}
-          userCss={userCssString}
-          answerHtml={answerHTML}
-          answerCss={answerCSS}
+          userHtml={userHtml}
+          userCss={userCss}
+          answerHtml={answerHtml}
+          answerCss={answerCss}
           handleActivate={setActiveUserViewTab}
         />
         <QuizResult wrapperClassName={styles.grade} score={score} debouncing={debouncing} comparing={comparing} />
@@ -103,6 +90,6 @@ export async function getStaticPaths() {
 export async function getStaticProps({ params }) {
   const quizFileData = readQuizFileById(params.id);
   return {
-    props: quizFileData,
+    props: { id: params.id, ...quizFileData },
   };
 }

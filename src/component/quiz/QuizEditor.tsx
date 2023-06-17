@@ -18,10 +18,9 @@ export default function QuizEditor({ wrapperClass, activate, html, css, handleAc
   const [htmlDebouncing, setHtmlDebouncing] = useState(false);
   const [cssDebouncing, setCssDebouncing] = useState(false);
 
-  // 린트 오류 더 살펴봐야 함 exhaustive-deps
   useEffect(() => {
     handleDebouncing(htmlDebouncing || cssDebouncing);
-  }, [htmlDebouncing, cssDebouncing]);
+  }, [htmlDebouncing, cssDebouncing, handleDebouncing]);
 
   return (
     <div className={classnames(styles.wrap, wrapperClass)}>

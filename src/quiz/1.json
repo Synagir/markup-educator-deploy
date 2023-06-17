@@ -1,8 +1,7 @@
 {
-  "id": "1",
   "name": "환영 페이지",
-  "userHTML": "<h1>Hi</h1>",
-  "userCSS": "h1 { font-size: 2em; color: green; }",
-  "answerHTML": "<h1>Hi</h1>",
-  "answerCSS": "h1 { font-size: 2.5em; }"
+  "defaultUserHtml": "<h1>Hi</h1>",
+  "defaultUserCss": "h1 { font-size: 2em; color: green; }",
+  "answerHtml": "<h1>Hi</h1>",
+  "answerCss": "h1 { font-size: 2.5em; }"
 }
