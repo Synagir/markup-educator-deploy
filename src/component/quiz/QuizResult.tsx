@@ -6,12 +6,15 @@ interface QuizResultProps {
   wrapperClassName?: string;
   score: number;
   debouncing: boolean;
+  comparing: boolean;
 }
 
-export default function QuizResult({ wrapperClassName, score, debouncing }: QuizResultProps) {
+export default function QuizResult({ wrapperClassName, score, debouncing, comparing }: QuizResultProps) {
   return (
     <div className={classnames(styles.wrap, wrapperClassName)}>
-      <p className={styles.text}>{debouncing ? <span>채점중</span> : <span>유사도 {Math.floor(score * 100)}%</span>}</p>
+      <p className={styles.text}>
+        {debouncing || comparing ? <span className={styles.comparing} /> : <span className={styles.result}>유사도 {Math.floor(score * 100)}%</span>}
+      </p>
       {true && (
         <Link href="./" role="button" className={classnames(styles.link, 'contrast')}>
           다음 문제로
