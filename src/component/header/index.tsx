@@ -28,16 +28,13 @@ function Header() {
           <span className="blind">공유</span>
         </button>
         <button type="button" onClick={toggleQuizListOpened} className={styles.quiz_button}>
-          <span />
-          <span />
-          <span />
           <span className="blind">퀴즈목록</span>
         </button>
         {quizListOpened &&
           <div className={styles.overlay}>
             <div className={styles.dimmed} onClick={toggleQuizListOpened} />
-            <div className={styles.menu_area}>
-              <div className={styles.header}>
+            <div className={styles.quiz_list_area}>
+              <div className={styles.quiz_list_header}>
                 <button type="button" className={styles.close_button} onClick={toggleQuizListOpened}>
                   <span className="blind">닫기</span>
                 </button>
