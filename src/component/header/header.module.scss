@@ -1,14 +1,12 @@
 .container {
   display: flex;
   align-items: center;
-  width: 100%;
   padding: 0 20px;
-  box-sizing: border-box;
   font-size: 18px;
   background-color: #526159;
 }
 .title {
-  font-size: 17px;
+  font-size: 14px;
   line-height: 40px;
   color: #ddd;
 }
@@ -28,11 +26,25 @@
   position: relative;
   width: 30px;
   height: 30px;
-  margin-left: 10px;
   border: none;
   vertical-align: top;
-  background: linear-gradient(#fff 50%, transparent 50%);
-  background-size: 100% 12px;
+  background-color: transparent;
+  span {
+    position: absolute;
+    width: 30px;
+    height: 5px;
+    top: 2px;
+    right: 0;
+    left: 0;
+    border-radius: 5px;
+    background-color: #ddd;
+    &:nth-child(2) {
+      top: 12px;
+    }
+    &:nth-child(3) {
+      top: 22px;
+    }
+  }
 }
 .overlay {
   position: fixed;
@@ -47,7 +59,7 @@
   height: 100%;
   background-color: rgba(#000, 0.7);
 }
-.quiz_list_area {
+.menu_area {
   position: absolute;
   top: 0;
   right: 0;
@@ -69,7 +81,7 @@
     text-align: center;
   }
 }
-.quiz_list_header {
+.header {
   position: relative;
 }
 .close_button {
@@ -77,21 +89,7 @@
   left: 0;
   width: 40px;
   height: 40px;
-  &::before,
-  &::after {
-    position: absolute;
-    top: 1px;
-    right: 17px;
-    width: 5px;
-    height: 38px;
-    background-color: #fff;
-    transform: rotate(45deg);
-    content: '';
-  }
-  &::after {
-    left: 17px;
-    transform: rotate(-45deg);
-  }
+  background-color: #fff;
 }
 .quiz_box {
   margin-top: 10px;
