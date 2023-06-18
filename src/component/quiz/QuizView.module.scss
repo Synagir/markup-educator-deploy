@@ -38,8 +38,7 @@
 
   .code {
     display: block;
-    // flex: 1 0 auto;
-    width: calc(50% - 10px);
+    flex: 1 0 0;
     & + & {
       margin-left: 20px;
     }
