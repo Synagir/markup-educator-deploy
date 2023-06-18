@@ -1,4 +1,5 @@
 import classnames from 'classnames';
+import QuizTabButton from '@component/quiz/QuizTabButton';
 import Canvas from '@component/Canvas';
 import styles from './QuizView.module.scss';
 
@@ -16,24 +17,8 @@ export default function QuizView({ wrapperClass, activate, userHtml, userCss, an
   return (
     <div className={classnames(styles.wrap, wrapperClass)}>
       <div className={styles.tab}>
-        <button
-          type="button"
-          className={classnames(styles.button_tab, {
-            [styles.activate]: activate,
-          })}
-          onClick={() => handleActivate(true)}
-        >
-          user
-        </button>
-        <button
-          type="button"
-          className={classnames(styles.button_tab, {
-            [styles.activate]: !activate,
-          })}
-          onClick={() => handleActivate(false)}
-        >
-          answer
-        </button>
+        <QuizTabButton isActivate={activate} handleClick={handleActivate} activateTabType innerText="user" />
+        <QuizTabButton isActivate={!activate} handleClick={handleActivate} activateTabType={false} innerText="answer" />
       </div>
       <div className={styles.result}>
         <div className={classnames(styles.code, { [styles.activate]: activate })}>
