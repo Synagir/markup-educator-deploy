@@ -12,7 +12,7 @@ interface QuizEditorProps {
   handleActivate: Dispatch<SetStateAction<boolean>>;
   handleHtml: Dispatch<SetStateAction<string>>;
   handleCss: Dispatch<SetStateAction<string>>;
-  handleDebouncing: Dispatch<SetStateAction<boolean>>;
+  handleDebouncing?: Dispatch<SetStateAction<boolean>>;
 }
 
 export default function QuizEditor({ wrapperClass, activate, html, css, handleActivate, handleHtml, handleCss, handleDebouncing }: QuizEditorProps) {
@@ -20,7 +20,9 @@ export default function QuizEditor({ wrapperClass, activate, html, css, handleAc
   const [cssDebouncing, setCssDebouncing] = useState(false);
 
   useEffect(() => {
-    handleDebouncing(htmlDebouncing || cssDebouncing);
+    if (handleDebouncing) {
+      handleDebouncing(htmlDebouncing || cssDebouncing);
+    }
   }, [htmlDebouncing, cssDebouncing, handleDebouncing]);
 
   return (
