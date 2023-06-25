@@ -27,8 +27,6 @@
 }
 
 .quiz {
-  display: flex;
-  flex-direction: column;
   margin-top: 50px;
 }
 
@@ -94,7 +92,7 @@
     max-width: 970px;
   }
 
-  .editor {
+  .quiz {
     flex-direction: row;
   }
 }

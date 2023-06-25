@@ -16,10 +16,6 @@
   }
 }
 
-.result {
-  flex: 1 0 100%;
-}
-
 .canvas {
   width: 100%;
   aspect-ratio: 1 / 1;
@@ -29,7 +25,6 @@
 @include mediaQuery('tablet') {
   .result {
     display: flex;
-    justify-content: space-between;
   }
 
   .tab {
