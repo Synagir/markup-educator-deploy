@@ -26,6 +26,7 @@ export default function Quiz({ id, name, defaultUserHtml, defaultUserCss, answer
   const [debouncing, setDebouncing] = useState(false);
   const [score, setScore] = useState(0);
   const [comparing, setComparing] = useState(false);
+  const [msgListenerReady, setMsgListenerReady] = useState(false);
 
   // db에서 코드 불러오기
   const dataBaseItem = useLiveQuery(() => db.markups.where('id').equals(id).toArray())?.shift();
@@ -35,6 +36,28 @@ export default function Quiz({ id, name, defaultUserHtml, defaultUserCss, answer
   }
 
   useEffect(() => {
+    // 아이프레임 이벤트 리스너 등록
+    function handleIframeMessage(event) {
+      if (event?.source?.location?.pathname === 'srcdoc') {
+        console.log(event);
+        console.log(event.source.frameElement.dataset.type);
+        // 이벤트가 발생될 때마다 해당되는 요소의 픽셀 데이터 업데이트
+        // 업데이트 후 스코어 다시 계산
+        // comparing = false
+      }
+    }
+    window.addEventListener('message', handleIframeMessage);
+
+    // 아이프레임 이벤트 발생을 위해 이벤트 리스너 등록 후 아이프레임 렌더
+    setMsgListenerReady(true);
+
+    return () => {
+      // 아이프레임 이벤트 리스너 제거
+      window.removeEventListener('message', handleIframeMessage);
+    };
+  }, []);
+
+  useEffect(() => {
     // db에 코드 저장
     try {
       db.markups.put({ id, htmlState: userHtml, cssState: userCss }, id);
@@ -42,13 +65,13 @@ export default function Quiz({ id, name, defaultUserHtml, defaultUserCss, answer
       console.error(error);
     }
     // 채점
-    async function handleCompare() {
-      setComparing(true);
-      setScore(await compareMarkup(userHtml, userCss, answerHtml, answerCss));
-      setComparing(false);
-    }
-    handleCompare();
-  }, [userHtml, userCss, answerHtml, answerCss, id]);
+    // async function handleCompare() {
+    //   setComparing(true);
+    //   setScore(await compareMarkup(userHtml, userCss, answerHtml, answerCss));
+    //   setComparing(false);
+    // }
+    // handleCompare();
+  }, [userHtml, userCss, id]);
 
   return (
     <div className={styles.wrap}>
@@ -64,15 +87,17 @@ export default function Quiz({ id, name, defaultUserHtml, defaultUserCss, answer
           handleCss={setUserCss}
           handleDebouncing={setDebouncing}
         />
-        <QuizView
-          wrapperClass={styles.view}
-          activate={activeUserViewTab}
-          userHtml={userHtml}
-          userCss={userCss}
-          answerHtml={answerHtml}
-          answerCss={answerCss}
-          handleActivate={setActiveUserViewTab}
-        />
+        {msgListenerReady && (
+          <QuizView
+            wrapperClass={styles.view}
+            activate={activeUserViewTab}
+            userHtml={userHtml}
+            userCss={userCss}
+            answerHtml={answerHtml}
+            answerCss={answerCss}
+            handleActivate={setActiveUserViewTab}
+          />
+        )}
         <QuizResult wrapperClassName={styles.grade} score={score} debouncing={debouncing} comparing={comparing} />
       </main>
     </div>
