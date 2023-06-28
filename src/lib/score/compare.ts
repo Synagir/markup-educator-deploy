@@ -1,14 +1,5 @@
 import { toPixelData } from 'html-to-image';
 
-async function getPixelData(htmlString: string, cssString: string) {
-  const shadowParent = document.createElement('div');
-  const shadowRoot = shadowParent.attachShadow({ mode: 'open' });
-  shadowRoot.innerHTML = `<style>${cssString}</style>${htmlString}`;
-  const pixels = await toPixelData(shadowParent, { width: 500, height: 500, cacheBust: true });
-
-  return pixels;
-}
-
 function calcSpectrum(userPixels, answerPixels) {
   const pixelLength = userPixels.length;
   const spectrum = new Array(256).fill(0);
@@ -36,10 +27,21 @@ function calcPixelPerfect(userPixels, answerPixels) {
   return identicalPixels / pixelLength;
 }
 
-export default async function compareMarkup(userHtmlString: string, userCssString: string, answerHTML: string, answerCSS: string) {
+function getIframeSize(userIframe, answerIframe) {
+  const { width: userWidth, height: userHeight } = userIframe.frameElement.getBoundingClientRect();
+  const { width: answerWidth, height: answerHeight } = answerIframe.frameElement.getBoundingClientRect();
+
+  return {
+    width: Math.floor(Math.min(userWidth, answerWidth)),
+    height: Math.floor(Math.min(userHeight, answerHeight)),
+  };
+}
+
+export default async function compareMarkup(userIframe, answerIframe) {
   console.time();
-  const userPixels = await getPixelData(userHtmlString, userCssString);
-  const answerPixels = await getPixelData(answerHTML, answerCSS);
+  const sizeOption = getIframeSize(userIframe, answerIframe);
+  const userPixels = await toPixelData(userIframe.document.body, sizeOption);
+  const answerPixels = await toPixelData(answerIframe.document.body, sizeOption);
 
   if (userPixels.length !== answerPixels.length) {
     console.error('Two canvas sizes are not identical');

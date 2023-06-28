@@ -36,14 +36,18 @@ export default function Quiz({ id, name, defaultUserHtml, defaultUserCss, answer
   }
 
   useEffect(() => {
+    const iframeMap = { user: null, answer: null };
     // 아이프레임 이벤트 리스너 등록
-    function handleIframeMessage(event) {
+    async function handleIframeMessage(event) {
       if (event?.source?.location?.pathname === 'srcdoc') {
-        console.log(event);
-        console.log(event.source.frameElement.dataset.type);
-        // 이벤트가 발생될 때마다 해당되는 요소의 픽셀 데이터 업데이트
-        // 업데이트 후 스코어 다시 계산
-        // comparing = false
+        // 이벤트가 발생될 때마다 아이프레임 요소 업데이트
+        iframeMap[event.source.frameElement.dataset.type] = event.source;
+        // 요소에 접근해서 스코어 계산
+        if (iframeMap.user && iframeMap.answer) {
+          setComparing(true);
+          setScore(await compareMarkup(iframeMap.user, iframeMap.answer));
+          setComparing(false);
+        }
       }
     }
     window.addEventListener('message', handleIframeMessage);
@@ -64,13 +68,6 @@ export default function Quiz({ id, name, defaultUserHtml, defaultUserCss, answer
     } catch (error) {
       console.error(error);
     }
-    // 채점
-    // async function handleCompare() {
-    //   setComparing(true);
-    //   setScore(await compareMarkup(userHtml, userCss, answerHtml, answerCss));
-    //   setComparing(false);
-    // }
-    // handleCompare();
   }, [userHtml, userCss, id]);
 
   return (
