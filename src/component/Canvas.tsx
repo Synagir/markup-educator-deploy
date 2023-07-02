@@ -1,5 +1,12 @@
 import styles from './Canvas.module.scss';
 
-export default function Canvas({ html, css }: { html: string; css: string }) {
-  return <iframe srcDoc={`<style>${css}</style>${html}`} title="Rendered codes" className={styles.canvas} />;
+export default function Canvas({ html, css, type }: { html: string; css: string; type: string }) {
+  return (
+    <iframe
+      srcDoc={`<style>${css}</style>${html}<script>window.addEventListener('load', () => {window.top.postMessage('', '*');})</script>`}
+      title="Rendered codes"
+      className={styles.canvas}
+      data-type={type}
+    />
+  );
 }
