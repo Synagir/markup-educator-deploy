@@ -26,7 +26,7 @@ export default function Quiz({ id, name, defaultUserHtml, defaultUserCss, answer
   const [debouncing, setDebouncing] = useState(false);
   const [score, setScore] = useState(0);
   const [comparing, setComparing] = useState(false);
-  const [msgListenerReady, setMsgListenerReady] = useState(false);
+  const [iframeListenerReady, setIframeListenerReady] = useState(false);
 
   // db에서 코드 불러오기
   const dataBaseItem = useLiveQuery(() => db.markups.where('id').equals(id).toArray())?.shift();
@@ -53,7 +53,7 @@ export default function Quiz({ id, name, defaultUserHtml, defaultUserCss, answer
     window.addEventListener('message', handleIframeMessage);
 
     // 아이프레임 이벤트 발생을 위해 이벤트 리스너 등록 후 아이프레임 렌더
-    setMsgListenerReady(true);
+    setIframeListenerReady(true);
 
     return () => {
       // 아이프레임 이벤트 리스너 제거
@@ -84,17 +84,16 @@ export default function Quiz({ id, name, defaultUserHtml, defaultUserCss, answer
           handleCss={setUserCss}
           handleDebouncing={setDebouncing}
         />
-        {msgListenerReady && (
-          <QuizView
-            wrapperClass={styles.view}
-            activate={activeUserViewTab}
-            userHtml={userHtml}
-            userCss={userCss}
-            answerHtml={answerHtml}
-            answerCss={answerCss}
-            handleActivate={setActiveUserViewTab}
-          />
-        )}
+        <QuizView
+          wrapperClass={styles.view}
+          activate={activeUserViewTab}
+          userHtml={userHtml}
+          userCss={userCss}
+          answerHtml={answerHtml}
+          answerCss={answerCss}
+          handleActivate={setActiveUserViewTab}
+          iframeListenerReady={iframeListenerReady}
+        />
         <QuizResult wrapperClassName={styles.grade} score={score} debouncing={debouncing} comparing={comparing} />
       </main>
     </div>
