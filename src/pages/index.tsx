@@ -19,28 +19,30 @@ export default function Index() {
       <main className={styles.main}>
         <h1 className={styles.title}>Can yoU Mark Up ?</h1>
         <p className={styles.description}>화면을 똑같이 만들 수 있나요 ?</p>
-        <QuizEditor
-          wrapperClass={styles.quiz}
-          activate={activeHtmlStateTab}
-          html={htmlDefaultState}
-          css={cssDefaultState}
-          handleActivate={setActiveCodeTab}
-          handleHtml={setHtmlState}
-          handleCss={setCssState}
-        />
-        <QuizView
-          wrapperClass={styles.quiz}
-          activate={activeUserViewTab}
-          userHtml={htmlState}
-          userCss={cssState}
-          answerHtml=""
-          answerCss=""
-          handleActivate={setActiveUserViewTab}
-        />
         <div className={styles.box}>
-          <Link href="./quiz/1" className={classnames(styles.link_start, 'contrast')}>
-            시작하기
-          </Link>
+          <QuizEditor
+            wrapperClass={styles.quiz}
+            activate={activeHtmlStateTab}
+            html={htmlDefaultState}
+            css={cssDefaultState}
+            handleActivate={setActiveCodeTab}
+            handleHtml={setHtmlState}
+            handleCss={setCssState}
+          />
+          <QuizView
+            wrapperClass={styles.quiz}
+            activate={activeUserViewTab}
+            userHtml={htmlState}
+            userCss={cssState}
+            answerHtml=""
+            answerCss=""
+            handleActivate={setActiveUserViewTab}
+          />
+          <div className={styles.start}>
+            <Link href="./quiz/1" className={classnames(styles.link_start, 'contrast')}>
+              시작하기
+            </Link>
+          </div>
         </div>
         <h2 className={styles.quiz_title}>퀴즈 목록</h2>
         <div className={styles.quiz_box}>

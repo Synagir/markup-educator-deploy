@@ -26,11 +26,19 @@
   text-align: center;
 }
 
-.quiz {
-  margin-top: 50px;
+.box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.box {
+.quiz {
+  margin-top: 50px;
+  width: 100%;
+}
+
+.start {
+  flex: 1 0 auto;
   margin-top: 30px;
   text-align: center;
 }
@@ -92,8 +100,12 @@
     max-width: 970px;
   }
 
-  .quiz {
-    flex-direction: row;
+  .link_start {
+    padding: 0 34px;
+    border-radius: 12px;
+    font-weight: bold;
+    font-size: 32px;
+    line-height: 98px;
   }
 }
 
@@ -101,5 +113,16 @@
   .main {
     flex-wrap: wrap;
     max-width: 1890px;
+  }
+
+  .box {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .quiz {
+    &:nth-child(2) {
+      width: 50%;
+    }
   }
 }
