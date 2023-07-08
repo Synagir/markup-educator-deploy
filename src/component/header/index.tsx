@@ -69,6 +69,17 @@ function Header() {
                   </li>
                 </ul>
               </div>
+              <div className={styles.quiz_box}>
+                <em className={styles.quiz_level}>고급</em>
+                {/* 문제 수 받아서 처리 */}
+                <ul className={styles.list_quiz}>
+                  <li className={styles.item_quiz}>
+                    <Link href="./" className={styles.link_quiz}>
+                      # Quiz 01
+                    </Link>
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
         }

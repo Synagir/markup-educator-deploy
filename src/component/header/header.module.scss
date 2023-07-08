@@ -10,7 +10,7 @@
 .title {
   font-size: 17px;
   line-height: 40px;
-  color: #ddd;
+  color: #fff;
 }
 .button_area {
   margin-left: auto;
@@ -53,7 +53,9 @@
   right: 0;
   width: 315px;
   height: 100%;
-  background-color: #202020;
+  border-radius: 10px;
+  background-color: #303030;
+  animation: popup 1s;
   @media (min-width: 768px) {
     top: 50%;
     left: 50%;
@@ -61,6 +63,7 @@
     transform: translate(-50%, -50%);
     width: 500px;
     height: 700px;
+    animation: none;
   }
   .title {
     display: block;
@@ -81,7 +84,7 @@
   &::after {
     position: absolute;
     top: 1px;
-    right: 17px;
+    right: 18px;
     width: 5px;
     height: 38px;
     background-color: #fff;
@@ -94,11 +97,12 @@
   }
 }
 .quiz_box {
-  margin-top: 10px;
+  margin: 20px 20px 0;
   text-align: center;
-  color: #ddd;
+  color: #fff;
   & + & {
-    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid #fff;
   }
 }
 .quiz_level {
@@ -117,12 +121,22 @@
   bottom: 40px;
   left: 50%;
   transform: translate(-50%);
-  color: #ccc;
+  padding: 10px;
+  border-radius: 10px;
+  color: #fff;
   background-color: rgba(#000, 0.7);
-  animation: popup ease-in-out 3.4s;
+  animation: share ease-in-out 3.4s;
 }
 
 @keyframes popup {
+  0% {
+    right: -315px;
+  }
+  to {
+    right: 0;
+  }
+}
+@keyframes share {
   0% {
     opacity: 0;
   }
