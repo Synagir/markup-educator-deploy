@@ -62,7 +62,9 @@
 @include mediaQuery('pc_wide') {
   .main {
     flex-wrap: wrap;
-    max-width: 1890px;
+    max-width: none;
+    width: 1500px;
+    padding-bottom: 0;
   }
 
   .grade {
