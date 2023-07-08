@@ -40,11 +40,19 @@ function getIframeSize(userIframe, answerIframe) {
 export default async function compareMarkup(userIframe, answerIframe) {
   console.time();
   const sizeOption = getIframeSize(userIframe, answerIframe);
-  const userPixels = await toPixelData(userIframe.document.body, sizeOption);
-  const answerPixels = await toPixelData(answerIframe.document.body, sizeOption);
+  let userPixels;
+  let answerPixels;
+  try {
+    userPixels = await toPixelData(userIframe.document.body, sizeOption);
+    answerPixels = await toPixelData(answerIframe.document.body, sizeOption);
+  } catch (error) {
+    console.error(error);
+    return 0;
+  }
 
   if (userPixels.length !== answerPixels.length) {
     console.error('Two canvas sizes are not identical');
+    return 0;
   }
 
   // compare canvas
