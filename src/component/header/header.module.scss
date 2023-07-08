@@ -18,11 +18,8 @@
 .button {
   width: 30px;
   height: 30px;
-  border: 1px solid #ddd;
   vertical-align: top;
-  & + & {
-    margin-left: 10px;
-  }
+  background: url('./assets/share.png') no-repeat center/cover;
 }
 .quiz_button {
   position: relative;
