@@ -1,8 +1,16 @@
+.result {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  z-index: 0;
+}
+
 .code {
-  display: none;
+  position: absolute;
+  inset: 0 0 0 0;
+  z-index: 0;
 
   &.activate {
-    display: block;
+    z-index: 1;
   }
 
   &_label {
@@ -24,7 +32,9 @@
 
 @include mediaQuery('tablet') {
   .result {
+    flex: 1 0 100%;
     display: flex;
+    aspect-ratio: auto;
   }
 
   .tab {
@@ -32,6 +42,8 @@
   }
 
   .code {
+    position: relative;
+    inset: auto;
     display: block;
     flex: 1 0 0;
     & + & {

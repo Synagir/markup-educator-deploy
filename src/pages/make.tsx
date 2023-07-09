@@ -28,22 +28,59 @@ export default function Make() {
     // download json file
     const fileURI = encodeURIComponent(JSON.stringify(content, null, 4));
 
-    console.log(fileURI);
     download(`data:text/json,${fileURI}`, 'quiz.json');
+  }
+
+  function handleLoad() {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = '.json';
+
+    input.addEventListener('change', () => {
+      const file = input.files[0];
+
+      if (!file) {
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.addEventListener('load', () => {
+        const jsonData = JSON.parse(reader.result);
+        const {
+          name: loadedName,
+          category: loadedCategory,
+          defaultUserHtml: loadedUserHtml,
+          defaultUserCss: loadedUserCss,
+          answerHtml: loadedAnswerHtml,
+          answerCss: loadedAnswerCss,
+        } = jsonData;
+
+        setJsonName(loadedName);
+        setJsonCategory(loadedCategory);
+        setUserHtml(loadedUserHtml);
+        setUserCss(loadedUserCss);
+        setAnswerHtml(loadedAnswerHtml);
+        setAnswerCss(loadedAnswerCss);
+      });
+
+      reader.readAsText(file);
+    });
+
+    input.click();
   }
 
   return (
     <div>
       <main className={styles.main}>
-        <h2>USER</h2>
+        <h2>USER HTML / CSS</h2>
         <div className={styles.editor_wrap}>
-          <Editor lang="html" initialString="" setString={setUserHtml} setDebouncing={setDebouncing} />
-          <Editor lang="css" initialString="" setString={setUserCss} setDebouncing={setDebouncing} />
+          <Editor lang="html" initialString={userHtml} setString={setUserHtml} setDebouncing={setDebouncing} />
+          <Editor lang="css" initialString={userCss} setString={setUserCss} setDebouncing={setDebouncing} />
         </div>
-        <h2>ANSWER</h2>
+        <h2>ANSWER HTML / CSS</h2>
         <div className={styles.editor_wrap}>
-          <Editor lang="html" initialString="" setString={setAnswerHtml} setDebouncing={setDebouncing} />
-          <Editor lang="css" initialString="" setString={setAnswerCss} setDebouncing={setDebouncing} />
+          <Editor lang="html" initialString={answerHtml} setString={setAnswerHtml} setDebouncing={setDebouncing} />
+          <Editor lang="css" initialString={answerCss} setString={setAnswerCss} setDebouncing={setDebouncing} />
         </div>
         <div className={styles.canvas_wrap}>
           <Canvas html={userHtml} css={userCss} />
@@ -51,13 +88,17 @@ export default function Make() {
         </div>
         <div className={styles.control_wrap}>
           <label>
-            name: <input type="text" onChange={(e) => setJsonName(e.target.value)} />
+            name: <input type="text" onChange={(e) => setJsonName(e.target.value)} value={jsonName} />
           </label>
           <label>
-            category: <input type="text" onChange={(e) => setJsonCategory(e.target.value)} />
+            category: <input type="text" onChange={(e) => setJsonCategory(e.target.value)} value={jsonCategory} />
           </label>
-          <button type="button" onClick={handleSave}>
+          <br />
+          <button type="button" onClick={handleSave} className={styles.button}>
             save
+          </button>
+          <button type="button" onClick={handleLoad} className={styles.button}>
+            load
           </button>
         </div>
       </main>
