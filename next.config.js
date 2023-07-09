@@ -2,7 +2,7 @@
 
 const nextConfig = {
   sassOptions: {
-    additionalData: `@use "styles/mixins.scss" as *;`,
+    additionalData: `@use "src/styles/mixins.scss" as *;`,
   },
 };
 
