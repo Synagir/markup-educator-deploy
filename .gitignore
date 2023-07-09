@@ -105,4 +105,4 @@ dist
 
 # extra
 
-src/package-lock.json
+package-lock.json

@@ -15,10 +15,13 @@ Provide educational markup quizzes
 
 ### How to run the project
 
-1. Go to project `src` folder
-2. `npm i`
-3. `npm run dev`
+1. `npm i`
+2. `npm run dev`
 
 ### How to contribute
 
 No rules yet
+
+### Image Resource
+
+- https://fonts.google.com/icons
