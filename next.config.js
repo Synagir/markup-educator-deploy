@@ -1,8 +1,8 @@
 /** @type {import('next').NextConfig} */
 
 const nextConfig = {
+  basePath: '/markup-educator-deploy',
   sassOptions: {
-    basePath: '/markup-educator-deploy',
     additionalData: `@use "src/styles/mixins.scss" as *;`,
   },
 };
